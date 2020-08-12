@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:todo/Shared/colors.dart';
 import 'package:todo/database/database.dart';
 import 'package:todo/models/project.dart';
 import 'package:todo/models/user.dart';
@@ -25,13 +26,14 @@ class _AddtaskState extends State<Addtask> {
   String taskname = '';
   List<File> files = [];
   bool loading = false;
-  DateTime enddate = DateTime.now();
+  DateTime enddate = DateTime.now().add(new Duration(days: 1));
   DateTime startdate = DateTime.now();
   List<String> assignedlist = [];
   int dlength = 0;
   List<String> attachmentdownloadurls = [];
   TextEditingController _descriptioncontroller = TextEditingController();
   String description = '';
+  bool valid = false;
   Future<Null> _enddate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
         context: context,
@@ -82,11 +84,9 @@ class _AddtaskState extends State<Addtask> {
         padding: EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
         alignment: Alignment.topLeft,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(color: Colors.grey[200], spreadRadius: 2, blurRadius: 4)
-            ]),
+          borderRadius: BorderRadius.circular(8),
+          color: Colors.white,
+        ),
         child: TextFormField(
           keyboardType: TextInputType.text,
           maxLines: 1,
@@ -142,12 +142,9 @@ class _AddtaskState extends State<Addtask> {
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height * 0.06,
           decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.grey[200], spreadRadius: 2, blurRadius: 4),
-              ]),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+          ),
           child: Padding(
             padding: const EdgeInsets.only(left: 20.0, right: 20),
             child: Row(
@@ -177,11 +174,9 @@ class _AddtaskState extends State<Addtask> {
         padding: EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
         alignment: Alignment.topLeft,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(color: Colors.grey[200], spreadRadius: 1, blurRadius: 4)
-            ]),
+          borderRadius: BorderRadius.circular(8),
+          color: Colors.white,
+        ),
         child: ConstrainedBox(
           constraints: BoxConstraints(
             maxHeight: MediaQuery.of(context).size.height * 0.3,
@@ -277,7 +272,7 @@ class _AddtaskState extends State<Addtask> {
     final user = Provider.of<User>(context);
     print(widget.projectuid);
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: secondarybackgroundcolor,
       body: SafeArea(
         child: SingleChildScrollView(
           child: loading
@@ -291,7 +286,7 @@ class _AddtaskState extends State<Addtask> {
                     ),
                     Text(
                       "creating and uploading to database",
-                      style: TextStyle(color: Colors.black),
+                      style: TextStyle(color: white),
                     )
                   ],
                 )
@@ -307,14 +302,14 @@ class _AddtaskState extends State<Addtask> {
                           IconButton(
                             icon: Icon(
                               Icons.arrow_back,
-                              color: Colors.black,
+                              color: white,
                             ),
                             onPressed: () {},
                           ),
                           IconButton(
                             icon: Icon(
                               Icons.settings,
-                              color: Colors.black,
+                              color: white,
                             ),
                             onPressed: () {},
                           ),
@@ -335,7 +330,7 @@ class _AddtaskState extends State<Addtask> {
                       child: Text(
                         "Task Name",
                         style: TextStyle(
-                            color: Colors.black,
+                            color: white,
                             fontWeight: FontWeight.w500,
                             fontSize:
                                 MediaQuery.of(context).size.height * 0.02),
@@ -351,7 +346,7 @@ class _AddtaskState extends State<Addtask> {
                           child: Text(
                             "Start Date",
                             style: TextStyle(
-                                color: Colors.black,
+                                color: white,
                                 fontWeight: FontWeight.w500,
                                 fontSize:
                                     MediaQuery.of(context).size.height * 0.02),
@@ -363,7 +358,7 @@ class _AddtaskState extends State<Addtask> {
                           child: Text(
                             "End Date",
                             style: TextStyle(
-                                color: Colors.black,
+                                color: white,
                                 fontWeight: FontWeight.w500,
                                 fontSize:
                                     MediaQuery.of(context).size.height * 0.02),
@@ -382,14 +377,9 @@ class _AddtaskState extends State<Addtask> {
                             },
                             child: Container(
                               decoration: BoxDecoration(
-                                  color: Colors.grey[200],
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Colors.grey[200],
-                                        spreadRadius: 1,
-                                        blurRadius: 2)
-                                  ]),
+                                color: Colors.grey[200],
+                                borderRadius: BorderRadius.circular(10),
+                              ),
                               height: MediaQuery.of(context).size.height * 0.06,
                               width: MediaQuery.of(context).size.width * 0.4,
                               child: Center(
@@ -421,14 +411,9 @@ class _AddtaskState extends State<Addtask> {
                             },
                             child: Container(
                               decoration: BoxDecoration(
-                                  color: Colors.grey[200],
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Colors.grey[200],
-                                        spreadRadius: 1,
-                                        blurRadius: 2)
-                                  ]),
+                                color: Colors.grey[200],
+                                borderRadius: BorderRadius.circular(10),
+                              ),
                               height: MediaQuery.of(context).size.height * 0.06,
                               width: MediaQuery.of(context).size.width * 0.4,
                               child: Center(
@@ -460,7 +445,7 @@ class _AddtaskState extends State<Addtask> {
                       child: Text(
                         "Task Description",
                         style: TextStyle(
-                            color: Colors.black,
+                            color: white,
                             fontWeight: FontWeight.w500,
                             fontSize:
                                 MediaQuery.of(context).size.height * 0.02),
@@ -475,7 +460,7 @@ class _AddtaskState extends State<Addtask> {
                         children: <Widget>[
                           Text(
                             '${dlength.toString()}/100',
-                            style: TextStyle(fontSize: 15, color: Colors.black),
+                            style: TextStyle(fontSize: 15, color: white),
                           )
                         ],
                       ),
@@ -486,14 +471,14 @@ class _AddtaskState extends State<Addtask> {
                       child: Text(
                         "Assigned to",
                         style: TextStyle(
-                            color: Colors.black,
+                            color: white,
                             fontWeight: FontWeight.w500,
                             fontSize:
                                 MediaQuery.of(context).size.height * 0.02),
                       ),
                     ),
                     team(),
-                    Padding(
+                    /* Padding(
                       padding: const EdgeInsets.only(
                           left: 20.0, right: 20, top: 20, bottom: 10),
                       child: Text(
@@ -505,48 +490,66 @@ class _AddtaskState extends State<Addtask> {
                                 MediaQuery.of(context).size.height * 0.02),
                       ),
                     ),
-                    attach(),
+                    attach(),*/
+                    SizedBox(
+                      height: 20,
+                    ),
+                    valid
+                        ? Center(
+                            child: Text(
+                              'task name & assigned should not be empty',
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          )
+                        : Container(),
                     SizedBox(
                       height: 20,
                     ),
                     Center(
                       child: FloatingActionButton.extended(
                           onPressed: () {
-                            setState(() {
-                              loading = true;
-                            });
-
-                            upload(files).then((value) {
-                              DatabaseService(projectuid: widget.projectuid)
-                                  .UpdateTaskDetails(
-                                taskname,
-                                description,
-                                startdate,
-                                enddate,
-                                assignedlist,
-                                attachmentdownloadurls,
-                                user.email,
-                              )
-                                  .then((v) {
-                                if (v == true) {
-                                  setState(() {
-                                    loading = false;
-                                  });
-                                  Navigator.pop(context);
-                                } else {
-                                  Navigator.pop(context);
-                                }
+                            if (taskname.isNotEmpty &&
+                                assignedlist.isNotEmpty) {
+                              setState(() {
+                                loading = true;
                               });
-                              print(value);
-                            });
+
+                              upload(files).then((value) {
+                                DatabaseService(projectuid: widget.projectuid)
+                                    .UpdateTaskDetails(
+                                  taskname,
+                                  description,
+                                  startdate,
+                                  enddate,
+                                  assignedlist,
+                                  attachmentdownloadurls,
+                                  user.email,
+                                )
+                                    .then((v) {
+                                  if (v == true) {
+                                    setState(() {
+                                      loading = false;
+                                    });
+                                    Navigator.pop(context);
+                                  } else {
+                                    Navigator.pop(context);
+                                  }
+                                });
+                                print(value);
+                              });
+                            } else {
+                              setState(() {
+                                valid = true;
+                              });
+                            }
                           },
-                          backgroundColor: Colors.black,
+                          backgroundColor: white,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10)),
                           label: Text(
                             "CREATE TASK",
                             style: TextStyle(
-                                color: Colors.white,
+                                color: secondarybackgroundcolor,
                                 fontWeight: FontWeight.bold,
                                 letterSpacing: 1.4),
                           )),

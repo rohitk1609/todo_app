@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo/Shared/colors.dart';
 import 'package:todo/database/database.dart';
 import 'package:todo/models/user.dart';
 import 'package:todo/models/userdata.dart';
@@ -22,11 +23,9 @@ class _AddteamState extends State<Addteam> {
         padding: EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
         alignment: Alignment.topLeft,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(color: Colors.grey[200], spreadRadius: 2, blurRadius: 4)
-            ]),
+          borderRadius: BorderRadius.circular(8),
+          color: Colors.white,
+        ),
         child: TextFormField(
           keyboardType: TextInputType.text,
           maxLines: 1,
@@ -68,7 +67,7 @@ class _AddteamState extends State<Addteam> {
     final user = Provider.of<User>(context);
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: secondarybackgroundcolor,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -79,9 +78,6 @@ class _AddteamState extends State<Addteam> {
                 Container(
                   height: MediaQuery.of(context).size.height * 0.15,
                   width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage('assets/images/people.jpg'))),
                 ),
                 _search(),
                 widget.workspaceteamdata.isEmpty
@@ -206,14 +202,14 @@ class _AddteamState extends State<Addteam> {
                         print(widget.projectteam);
                         Navigator.pop(context, widget.projectteam);
                       },
-                      backgroundColor: Colors.black,
+                      backgroundColor: white,
                       label: Text(
                         "add members",
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: black),
                       ),
                       icon: Icon(
                         Icons.add,
-                        color: Colors.white,
+                        color: black,
                       ),
                     ),
                   ),

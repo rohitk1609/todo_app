@@ -236,45 +236,86 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget profileBox(UserData user) {
-    return Container(
-      decoration: BoxDecoration(
-        color: secondarycolor,
-      ),
-      width: MediaQuery.of(context).size.width,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 10.0, top: 10),
-        child: Column(
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                CircleAvatar(
-                  backgroundColor: secondarycolor,
-                  radius: MediaQuery.of(context).size.width * 0.1,
-                  child: Icon(
-                    Icons.adjust,
-                    color: white,
-                  ),
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.1,
+              decoration: BoxDecoration(
+                  color: Colors.orange, borderRadius: BorderRadius.circular(5)),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 15.0, right: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          "Hello",
+                          style: TextStyle(
+                              color: white,
+                              fontWeight: FontWeight.w400,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.06),
+                        ),
+                        Text(
+                          user.username,
+                          style: TextStyle(
+                              color: white,
+                              fontWeight: FontWeight.w700,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.06),
+                        )
+                      ],
+                    ),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            widget.workspaces[selectedradiotile].projects.length
+                                .toString(),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: white,
+                                fontWeight: FontWeight.w500,
+                                fontSize:
+                                    MediaQuery.of(context).size.height * 0.018),
+                          ),
+                          Text(
+                            "Projects",
+                            maxLines: 5,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: Colors.grey[200],
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
-            SizedBox(height: 15),
-            Row(
-              children: <Widget>[
-                Text(
-                  user.username,
-                  style: TextStyle(
-                      color: white,
-                      fontWeight: FontWeight.w500,
-                      fontSize: MediaQuery.of(context).size.width * 0.05),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 15,
-            ),
-          ],
+          ),
         ),
-      ),
+        CircleAvatar(
+          backgroundColor: Colors.green,
+          radius: MediaQuery.of(context).size.width * 0.1,
+          child: Icon(
+            Icons.adjust,
+            color: white,
+          ),
+        ),
+      ],
     );
   }
 
@@ -391,147 +432,120 @@ class _ProfileState extends State<Profile> {
           child: Padding(
             padding: const EdgeInsets.all(12.0),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Expanded(
-                  flex: 2,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      CircleAvatar(
-                        child: Icon(
-                          Icons.accessibility_new,
-                          color: white,
-                        ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    CircleAvatar(
+                      child: Icon(
+                        Icons.accessibility_new,
+                        color: white,
                       ),
-                      SizedBox(
-                        width: 10,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: Text(
+                        project.projectname,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            color: white,
+                            fontWeight: FontWeight.w500,
+                            fontSize:
+                                MediaQuery.of(context).size.height * 0.018),
                       ),
-                      Expanded(
+                    ),
+                  ],
+                ),
+                Text(
+                  project.projectdescription,
+                  maxLines: 4,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: Colors.grey[200],
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 5.0),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
                             Text(
-                              project.projectname,
+                              project.tasks.length.toString(),
                               maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                  color: white,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: MediaQuery.of(context).size.height *
-                                      0.018),
-                            ),
-                            SizedBox(
-                              height: 10,
+                                color: white,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                             Text(
-                              'A/b testing for lab Design , proper texting via sms and otp requires attention',
-                              maxLines: 5,
-                              overflow: TextOverflow.ellipsis,
+                              "Tasks",
+                              maxLines: 1,
                               style: TextStyle(
-                                color: Colors.grey[200],
-                                fontWeight: FontWeight.w400,
+                                color: white,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
                           ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 5.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: secondarycolor,
-                                borderRadius: BorderRadius.circular(5)),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                Text(
-                                  project.tasks.length.toString(),
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                    color: white,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                Text(
-                                  "Tasks",
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                    color: white,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 5.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Text(
+                              project.projectteam.length.toString(),
+                              maxLines: 1,
+                              style: TextStyle(
+                                color: white,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
-                          ),
+                            Text(
+                              "Team",
+                              maxLines: 1,
+                              style: TextStyle(
+                                color: white,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 5.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: secondarycolor,
-                                borderRadius: BorderRadius.circular(5)),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                Text(
-                                  project.projectteam.length.toString(),
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                    color: white,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                Text(
-                                  "Team",
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                    color: white,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
+                    )
+                  ],
                 ),
-                Expanded(
-                  flex: 1,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "90%",
-                        maxLines: 1,
-                        style: TextStyle(
-                            color: white,
-                            fontWeight: FontWeight.bold,
-                            fontSize:
-                                MediaQuery.of(context).size.height * 0.02),
-                      ),
-                      Divider(
-                        color: white,
-                        thickness: 10,
-                      )
-                    ],
-                  ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      "90%",
+                      maxLines: 1,
+                      style: TextStyle(
+                          color: white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: MediaQuery.of(context).size.height * 0.02),
+                    ),
+                    Divider(
+                      color: white,
+                      thickness: 10,
+                    )
+                  ],
                 )
               ],
             ),
@@ -568,9 +582,7 @@ class _ProfileState extends State<Profile> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Container(
-                              padding: EdgeInsets.only(
-                                  left: 10, right: 10, top: 10, bottom: 10),
-                              decoration: BoxDecoration(color: secondarycolor),
+                              padding: EdgeInsets.all(10),
                               width: MediaQuery.of(context).size.width,
                               child: Row(
                                 mainAxisAlignment:
@@ -736,10 +748,8 @@ class _ProfileState extends State<Profile> {
                                     ),
                                   ),
                                   IconButton(
-                                    icon: Icon(
-                                      Icons.settings,
-                                      color: Colors.white,
-                                    ),
+                                    icon: Icon(Icons.settings,
+                                        color: Colors.white),
                                     onPressed: () {},
                                   )
                                 ],
