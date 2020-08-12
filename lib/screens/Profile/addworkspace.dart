@@ -24,7 +24,7 @@ class _AddWorkspaceState extends State<AddWorkspace> {
         alignment: Alignment.topLeft,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: backgroundcolor,
+          color: whitebg,
         ),
         child: TextFormField(
           controller: _workspacecontroller,
@@ -59,7 +59,7 @@ class _AddWorkspaceState extends State<AddWorkspace> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: secondarybackgroundcolor,
+      backgroundColor: whitebg,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(

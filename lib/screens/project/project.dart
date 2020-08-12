@@ -579,7 +579,7 @@ class _ProjectPageState extends State<ProjectPage>
 
   Widget display() {
     return Container(
-      decoration: BoxDecoration(color: secondarybackgroundcolor),
+      decoration: BoxDecoration(color: whitebg),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -911,7 +911,7 @@ class _ProjectPageState extends State<ProjectPage>
             List<Task> tasks = snapshot.data;
 
             return Scaffold(
-              backgroundColor: secondarybackgroundcolor,
+              backgroundColor: whitebg,
               body: SafeArea(
                 child: Stack(
                   children: <Widget>[
@@ -925,7 +925,7 @@ class _ProjectPageState extends State<ProjectPage>
                             actionsIconTheme:
                                 IconThemeData(color: Colors.black),
                             pinned: true,
-                            backgroundColor: secondarybackgroundcolor,
+                            backgroundColor: whitebg,
                             flexibleSpace: FlexibleSpaceBar(
                                 collapseMode: CollapseMode.pin,
                                 background: display()),
@@ -968,7 +968,7 @@ class _ProjectPageState extends State<ProjectPage>
             );
           } else {
             return Scaffold(
-              backgroundColor: secondarybackgroundcolor,
+              backgroundColor: whitebg,
               body: Container(
                 child: Center(
                   child: CircularProgressIndicator(),

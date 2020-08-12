@@ -106,7 +106,7 @@ class _ImagepreviewState extends State<Imagepreview> {
     return WillPopScope(
       onWillPop: _onwillpop,
       child: Scaffold(
-        backgroundColor: secondarybackgroundcolor,
+        backgroundColor: whitebg,
         body: SafeArea(
           child: SingleChildScrollView(
             physics: ScrollPhysics(),

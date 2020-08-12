@@ -13,7 +13,7 @@ class _AuthenticateHomeState extends State<AuthenticateHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: secondarybackgroundcolor,
+      backgroundColor: whitebg,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20.0),

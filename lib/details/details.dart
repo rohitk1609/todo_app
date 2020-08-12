@@ -67,7 +67,7 @@ class _DetailsState extends State<Details> {
     return Container(
       height: MediaQuery.of(context).size.height * 0.06,
       decoration: BoxDecoration(
-        color: title == stitle ? secondarycolor : backgroundcolor,
+        color: title == stitle ? secondarycolor : whitebg,
         borderRadius: BorderRadius.circular(5),
       ),
       child: Center(
@@ -119,7 +119,7 @@ class _DetailsState extends State<Details> {
       alignment: Alignment.topLeft,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
-        color: backgroundcolor,
+        color: whitebg,
       ),
       child: TextFormField(
         controller: _workspacecontroller,
@@ -156,7 +156,7 @@ class _DetailsState extends State<Details> {
       alignment: Alignment.topLeft,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
-        color: backgroundcolor,
+        color: whitebg,
       ),
       child: TextFormField(
         controller: _projectcontroller,
@@ -194,7 +194,7 @@ class _DetailsState extends State<Details> {
     return ScopedModelDescendant<Workpsacemodel>(
       builder: (context, child, model) {
         return Scaffold(
-          backgroundColor: secondarybackgroundcolor,
+          backgroundColor: whitebg,
           bottomNavigationBar: _currentPage == 3
               ? Padding(
                   padding: const EdgeInsets.all(10.0),

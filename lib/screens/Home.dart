@@ -245,7 +245,7 @@ class _HomeState extends State<Home> {
                   if (snapshot.hasData) {
                     List<Project> myprojects = snapshot.data;
                     return Scaffold(
-                      backgroundColor: secondarybackgroundcolor,
+                      backgroundColor: whitebg,
                       body: SafeArea(child: ScopedModelDescendant<Timermodel>(
                           builder: (context, child, model) {
                         return Stack(
@@ -418,7 +418,7 @@ class _HomeState extends State<Home> {
                                                       .size
                                                       .height *
                                                   0.07,
-                                              color: backgroundcolor,
+                                              color: whitebg,
                                               child: Center(
                                                 child: Text(
                                                   model.time == null
@@ -630,7 +630,7 @@ class _HomeState extends State<Home> {
                     );
                   } else {
                     return Scaffold(
-                      backgroundColor: secondarybackgroundcolor,
+                      backgroundColor: whitebg,
                       body: Container(
                         child: Center(
                           child: CircularProgressIndicator(),
@@ -638,11 +638,10 @@ class _HomeState extends State<Home> {
                       ),
                     );
                   }
-                
                 });
           } else {
             return Scaffold(
-              backgroundColor: secondarybackgroundcolor,
+              backgroundColor: whitebg,
               body: Container(
                 child: Center(
                   child: CircularProgressIndicator(),

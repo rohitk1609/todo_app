@@ -83,7 +83,7 @@ class _OtherpreviewState extends State<Otherpreview> {
     return WillPopScope(
       onWillPop: _onwillpop,
       child: Scaffold(
-        backgroundColor: secondarybackgroundcolor,
+        backgroundColor: whitebg,
         body: SafeArea(
           child: SingleChildScrollView(
             physics: ScrollPhysics(),

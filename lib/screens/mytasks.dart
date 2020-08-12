@@ -191,7 +191,7 @@ class _MytasksState extends State<Mytasks> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: secondarybackgroundcolor,
+      backgroundColor: whitebg,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -60,7 +60,7 @@ class _UsernameState extends State<Username> {
     final user = Provider.of<User>(context);
 
     return Scaffold(
-      backgroundColor: secondarybackgroundcolor,
+      backgroundColor: whitebg,
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Container(

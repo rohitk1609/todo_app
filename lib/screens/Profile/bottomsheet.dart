@@ -22,7 +22,7 @@ class _BottomsheetState extends State<Bottomsheet>
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-            color: backgroundcolor,
+            color: whitebg,
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10), topRight: Radius.circular(10))),
         child: Wrap(
@@ -34,8 +34,7 @@ class _BottomsheetState extends State<Bottomsheet>
                   height: 10,
                   width: MediaQuery.of(context).size.width * 0.1,
                   decoration: BoxDecoration(
-                      color: backgroundcolor,
-                      borderRadius: BorderRadius.circular(20)),
+                      color: whitebg, borderRadius: BorderRadius.circular(20)),
                 ),
               ),
             ),

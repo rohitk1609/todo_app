@@ -31,7 +31,7 @@ dependencies:
   table_calendar: ^2.2.3
   percent_indicator: "^2.1.1"
   firebase_auth: 
-     
+  google_sign_in: 
   provider: ^4.1.0
   cloud_firestore:
   http: 

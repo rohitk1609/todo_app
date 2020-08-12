@@ -43,7 +43,7 @@ class _addprojectState extends State<addproject> {
   List<File> pdffiles = [];
   List<String> attachmentdownloadurls = [];
   List<File> all = [];
-  bool valid = false;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -112,7 +112,6 @@ class _addprojectState extends State<addproject> {
           color: secondarycolor,
         ),
         child: TextFormField(
-          readOnly: true,
           initialValue: projectname,
           keyboardType: TextInputType.text,
           maxLines: 1,
@@ -483,7 +482,7 @@ class _addprojectState extends State<addproject> {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     return Scaffold(
-      backgroundColor: secondarybackgroundcolor,
+      backgroundColor: whitebg,
       body: SafeArea(
         child: SingleChildScrollView(
           child: loading
@@ -659,14 +658,6 @@ class _addprojectState extends State<addproject> {
                       ),
                     ),
                     _projectlink(),
-                    valid
-                        ? Center(
-                            child: Text(
-                              'enter project name',
-                              style: TextStyle(color: Colors.red),
-                            ),
-                          )
-                        : Container(),
                     Padding(
                       padding: const EdgeInsets.only(
                           top: 20.0, bottom: 20, left: 20, right: 20),
@@ -675,41 +666,35 @@ class _addprojectState extends State<addproject> {
                         children: <Widget>[
                           FloatingActionButton.extended(
                               onPressed: () {
-                                if (projectname.isNotEmpty) {
-                                  setState(() {
-                                    loading = true;
-                                    projectteammembers.add(user.email);
-                                  });
+                                setState(() {
+                                  loading = true;
+                                  projectteammembers.add(user.email);
+                                });
 
-                                  DatabaseService(
-                                    workspaceuid: widget.workspace.workspaceuid,
-                                  )
-                                      .UpdateProjectDetails(
-                                          projectname,
-                                          description,
-                                          projectdeadline,
-                                          projectteammembers,
-                                          [],
-                                          user.email,
-                                          projectlink,
-                                          'inprogress',
-                                          [],
-                                          [])
-                                      .then((v) {
-                                    if (v == true) {
-                                      setState(() {
-                                        loading = false;
-                                      });
-                                      Navigator.pop(context);
-                                    } else {
-                                      Navigator.pop(context);
-                                    }
-                                  });
-                                } else {
-                                  setState(() {
-                                    valid = true;
-                                  });
-                                }
+                                DatabaseService(
+                                  workspaceuid: widget.workspace.workspaceuid,
+                                )
+                                    .UpdateProjectDetails(
+                                        projectname,
+                                        description,
+                                        projectdeadline,
+                                        projectteammembers,
+                                        [],
+                                        user.email,
+                                        projectlink,
+                                        'inprogress',
+                                        [],
+                                        [])
+                                    .then((v) {
+                                  if (v == true) {
+                                    setState(() {
+                                      loading = false;
+                                    });
+                                    Navigator.pop(context);
+                                  } else {
+                                    Navigator.pop(context);
+                                  }
+                                });
                               },
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10)),

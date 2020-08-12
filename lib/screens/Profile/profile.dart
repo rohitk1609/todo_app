@@ -236,86 +236,170 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget profileBox(UserData user) {
-    return Row(
-      children: <Widget>[
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.1,
-              decoration: BoxDecoration(
-                  color: Colors.orange, borderRadius: BorderRadius.circular(5)),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 15.0, right: 15),
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              InkWell(
+                onTap: () {
+                  showModalBottomSheet(
+                      backgroundColor: Colors.transparent,
+                      context: context,
+                      builder: (context) {
+                        return StatefulBuilder(
+                          builder: (BuildContext context, StateSetter state) {
+                            return Container(
+                                decoration: BoxDecoration(
+                                    color: whitebg,
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(10),
+                                        topRight: Radius.circular(10))),
+                                child: Wrap(
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.all(15.0),
+                                      child: Center(
+                                        child: Container(
+                                          height: 10,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.1,
+                                          decoration: BoxDecoration(
+                                              color: whitebg,
+                                              borderRadius:
+                                                  BorderRadius.circular(20)),
+                                        ),
+                                      ),
+                                    ),
+                                    ListView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: widget.workspaces.length,
+                                        itemBuilder: (c, i) {
+                                          return Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 10.0),
+                                              child: RadioListTile(
+                                                activeColor: white,
+                                                groupValue: selectedradiotile,
+                                                onChanged: (val) {
+                                                  state(() {
+                                                    selectedradiotile = val;
+                                                  });
+                                                  sharedPref.remove(
+                                                      '${widget.userdata.email}currentworkspace');
+                                                  sharedPref.save(
+                                                      '${widget.userdata.email}currentworkspace',
+                                                      widget.workspaces[val]);
+
+                                                  loadcurrentworkspace();
+                                                  Navigator.pop(context);
+                                                },
+                                                value: i,
+                                                title: Text(
+                                                  '${widget.workspaces[i].workspacename}',
+                                                  style:
+                                                      TextStyle(color: white),
+                                                ),
+                                              ));
+                                        }),
+                                    Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Container(
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          decoration: BoxDecoration(
+                                            color: Colors.black,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          child: FlatButton(
+                                            color: secondarycolor,
+                                            onPressed: () async {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        AddWorkspace(),
+                                                  ));
+                                            },
+                                            child: Text(
+                                              "Add Workspace",
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                          )),
+                                    ),
+                                  ],
+                                ));
+                          },
+                        );
+                      });
+                },
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          "Hello",
-                          style: TextStyle(
-                              color: white,
-                              fontWeight: FontWeight.w400,
-                              fontSize:
-                                  MediaQuery.of(context).size.width * 0.06),
-                        ),
-                        Text(
-                          user.username,
-                          style: TextStyle(
-                              color: white,
-                              fontWeight: FontWeight.w700,
-                              fontSize:
-                                  MediaQuery.of(context).size.width * 0.06),
-                        )
-                      ],
+                    Text(
+                      widget.workspaces[selectedradiotile].workspacename,
+                      style: TextStyle(
+                          color: black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: MediaQuery.of(context).size.height * 0.02),
                     ),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            widget.workspaces[selectedradiotile].projects.length
-                                .toString(),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                color: white,
-                                fontWeight: FontWeight.w500,
-                                fontSize:
-                                    MediaQuery.of(context).size.height * 0.018),
-                          ),
-                          Text(
-                            "Projects",
-                            maxLines: 5,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: Colors.grey[200],
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ],
-                      ),
+                    SizedBox(
+                      width: 10,
                     ),
+                    Icon(
+                      Icons.keyboard_arrow_down,
+                      color: Colors.black,
+                    )
                   ],
                 ),
               ),
+              IconButton(
+                icon: Icon(
+                  Icons.all_inclusive,
+                  color: black,
+                ),
+                onPressed: () {},
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          CircleAvatar(
+            backgroundColor: Colors.grey[800],
+            radius: MediaQuery.of(context).size.width * 0.1,
+            child: Icon(
+              Icons.adjust,
+              color: white,
             ),
           ),
-        ),
-        CircleAvatar(
-          backgroundColor: Colors.green,
-          radius: MediaQuery.of(context).size.width * 0.1,
-          child: Icon(
-            Icons.adjust,
-            color: white,
+          SizedBox(
+            height: 20,
           ),
-        ),
-      ],
+          Text(
+            widget.userdata.username,
+            style: TextStyle(
+                color: black,
+                fontWeight: FontWeight.bold,
+                fontSize: MediaQuery.of(context).size.height * 0.02),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Text(
+            'CEO',
+            style: TextStyle(
+                color: black,
+                fontWeight: FontWeight.w500,
+                fontSize: MediaQuery.of(context).size.height * 0.02),
+          ),
+        ],
+      ),
     );
   }
 
@@ -412,7 +496,7 @@ class _ProfileState extends State<Profile> {
 
   Widget projectBox(Project project) {
     return Padding(
-      padding: const EdgeInsets.only(right: 10.0),
+      padding: const EdgeInsets.only(bottom: 10.0),
       child: InkWell(
         onTap: () {
           Navigator.push(
@@ -426,127 +510,108 @@ class _ProfileState extends State<Profile> {
               ));
         },
         child: Container(
-          width: MediaQuery.of(context).size.width * 0.45,
+          width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
-              color: Colors.blue, borderRadius: BorderRadius.circular(10)),
+              color: white,
+              borderRadius: BorderRadius.circular(5),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.grey[200], spreadRadius: 1, blurRadius: 5)
+              ]),
           child: Padding(
             padding: const EdgeInsets.all(12.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    CircleAvatar(
-                      child: Icon(
-                        Icons.accessibility_new,
-                        color: white,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: Text(
-                        project.projectname,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            color: white,
-                            fontWeight: FontWeight.w500,
-                            fontSize:
-                                MediaQuery.of(context).size.height * 0.018),
-                      ),
-                    ),
-                  ],
-                ),
-                Text(
-                  project.projectdescription,
-                  maxLines: 4,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: Colors.grey[200],
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 5.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Text(
-                              project.tasks.length.toString(),
-                              maxLines: 1,
-                              style: TextStyle(
-                                color: white,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            Text(
-                              "Tasks",
-                              maxLines: 1,
-                              style: TextStyle(
-                                color: white,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 5.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Text(
-                              project.projectteam.length.toString(),
-                              maxLines: 1,
-                              style: TextStyle(
-                                color: white,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            Text(
-                              "Team",
-                              maxLines: 1,
-                              style: TextStyle(
-                                color: white,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      "90%",
-                      maxLines: 1,
+                      project.projectname,
                       style: TextStyle(
-                          color: white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: MediaQuery.of(context).size.height * 0.02),
+                          color: black,
+                          fontWeight: FontWeight.w500,
+                          fontSize: MediaQuery.of(context).size.height * 0.018),
                     ),
-                    Divider(
-                      color: white,
-                      thickness: 10,
+                    CircleAvatar(
+                      backgroundColor: green,
+                      radius: MediaQuery.of(context).size.width * 0.02,
                     )
                   ],
-                )
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        CircleAvatar(
+                          backgroundColor: blackbg,
+                          radius: MediaQuery.of(context).size.width * 0.03,
+                        ),
+                        SizedBox(
+                          width: 3,
+                        ),
+                        CircleAvatar(
+                          backgroundColor: blackbg,
+                          radius: MediaQuery.of(context).size.width * 0.03,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          '+5 others',
+                          style: TextStyle(
+                              color: secondarycolor,
+                              fontWeight: FontWeight.w500,
+                              fontSize:
+                                  MediaQuery.of(context).size.height * 0.015),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Icon(
+                          Icons.calendar_today,
+                          color: secondarycolor,
+                          size: MediaQuery.of(context).size.height * 0.02,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          'Nov, 29 2020',
+                          style: TextStyle(
+                              color: secondarycolor,
+                              fontWeight: FontWeight.w500,
+                              fontSize:
+                                  MediaQuery.of(context).size.height * 0.015),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Visibility(
+                  visible: project.projectdescription.isNotEmpty,
+                  child: Text(
+                    project.projectdescription,
+                    maxLines: 2,
+                    style: TextStyle(
+                        color: secondarycolor,
+                        fontWeight: FontWeight.w500,
+                        fontSize: MediaQuery.of(context).size.height * 0.014),
+                  ),
+                ),
               ],
             ),
           ),
@@ -555,492 +620,207 @@ class _ProfileState extends State<Profile> {
     );
   }
 
+  Widget _team() {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.13,
+      width: MediaQuery.of(context).size.width / 4 - 10,
+      child: Column(
+        children: <Widget>[
+          CircleAvatar(
+            backgroundColor: green,
+            radius: MediaQuery.of(context).size.width * 0.07,
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Text(
+            'Rohit',
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(color: black, fontWeight: FontWeight.w500),
+          ),
+          Text(
+            'Product',
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            style:
+                TextStyle(color: secondarycolor, fontWeight: FontWeight.w400),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    print(widget.userdata.email);
-    return ScopedModelDescendant<Workpsacemodel>(
-      builder: (co, child, model) {
-        return selectedradiotile == null
-            ? Scaffold(
-                backgroundColor: secondarybackgroundcolor,
-                body: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              )
-            : StreamBuilder<List<Project>>(
-                stream: DatabaseService(
-                        workspaceuid:
-                            widget.workspaces[selectedradiotile].workspaceuid)
-                    .projects,
-                builder: (context, snapshot) {
-                  List<Project> projects = snapshot.data;
-                  return Scaffold(
-                    backgroundColor: secondarybackgroundcolor,
-                    body: SafeArea(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Container(
-                              padding: EdgeInsets.all(10),
-                              width: MediaQuery.of(context).size.width,
+    return selectedradiotile == null ||
+            widget.userdata == null ||
+            widget.workspaces == null
+        ? Scaffold(
+            backgroundColor: whitebg,
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          )
+        : StreamBuilder<List<Project>>(
+            stream: DatabaseService(
+                    workspaceuid:
+                        widget.workspaces[selectedradiotile].workspaceuid)
+                .projects,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                List<Project> projects = snapshot.data;
+                return SafeArea(
+                  child: SingleChildScrollView(
+                    physics: ScrollPhysics(),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        profileBox(widget.userdata),
+                        Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  "Projects",
+                                  style: TextStyle(
+                                      color: black,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize:
+                                          MediaQuery.of(context).size.height *
+                                              0.018),
+                                ),
+                                Text(
+                                  'all projects',
+                                  style: TextStyle(
+                                      color: primarycolor,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize:
+                                          MediaQuery.of(context).size.height *
+                                              0.018),
+                                ),
+                              ],
+                            )),
+                        Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: projects.length,
+                                itemBuilder: (c, i) {
+                                  return projectBox(projects[i]);
+                                })),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0, right: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                "Team",
+                                style: TextStyle(
+                                    color: black,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize:
+                                        MediaQuery.of(context).size.height *
+                                            0.018),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                            padding: const EdgeInsets.only(
+                              left: 20.0,
+                              right: 20,
+                              top: 10,
+                            ),
+                            child: Wrap(
+                              alignment: WrapAlignment.start,
+                              children: <Widget>[
+                                _team(),
+                                _team(),
+                                _team(),
+                                _team(),
+                                _team(),
+                              ],
+                            )),
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: white,
+                                borderRadius: BorderRadius.circular(5),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.grey[200],
+                                      spreadRadius: 1,
+                                      blurRadius: 5)
+                                ]),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
-                                  InkWell(
-                                    onTap: () {
-                                      showModalBottomSheet(
-                                          backgroundColor: Colors.transparent,
-                                          context: context,
-                                          builder: (context) {
-                                            return StatefulBuilder(
-                                              builder: (BuildContext context,
-                                                  StateSetter state) {
-                                                return Container(
-                                                    decoration: BoxDecoration(
-                                                        color:
-                                                            secondarybackgroundcolor,
-                                                        borderRadius:
-                                                            BorderRadius.only(
-                                                                topLeft: Radius
-                                                                    .circular(
-                                                                        10),
-                                                                topRight: Radius
-                                                                    .circular(
-                                                                        10))),
-                                                    child: Wrap(
-                                                      children: <Widget>[
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(15.0),
-                                                          child: Center(
-                                                            child: Container(
-                                                              height: 10,
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width *
-                                                                  0.1,
-                                                              decoration: BoxDecoration(
-                                                                  color:
-                                                                      backgroundcolor,
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              20)),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        ListView.builder(
-                                                            shrinkWrap: true,
-                                                            itemCount: widget
-                                                                .workspaces
-                                                                .length,
-                                                            itemBuilder:
-                                                                (c, i) {
-                                                              return Padding(
-                                                                  padding: const EdgeInsets
-                                                                          .only(
-                                                                      top:
-                                                                          10.0),
-                                                                  child:
-                                                                      RadioListTile(
-                                                                    activeColor:
-                                                                        white,
-                                                                    groupValue:
-                                                                        selectedradiotile,
-                                                                    onChanged:
-                                                                        (val) {
-                                                                      state(() {
-                                                                        selectedradiotile =
-                                                                            val;
-                                                                      });
-                                                                      sharedPref
-                                                                          .remove(
-                                                                              '${widget.userdata.email}currentworkspace');
-                                                                      sharedPref.save(
-                                                                          '${widget.userdata.email}currentworkspace',
-                                                                          widget
-                                                                              .workspaces[val]);
-
-                                                                      loadcurrentworkspace();
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                    },
-                                                                    value: i,
-                                                                    title: Text(
-                                                                      '${widget.workspaces[i].workspacename}',
-                                                                      style: TextStyle(
-                                                                          color:
-                                                                              white),
-                                                                    ),
-                                                                  ));
-                                                            }),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(10.0),
-                                                          child: Container(
-                                                              width:
-                                                                  MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: Colors
-                                                                    .black,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10),
-                                                              ),
-                                                              child: FlatButton(
-                                                                color:
-                                                                    secondarycolor,
-                                                                onPressed:
-                                                                    () async {
-                                                                  Navigator.push(
-                                                                      context,
-                                                                      MaterialPageRoute(
-                                                                        builder:
-                                                                            (context) =>
-                                                                                AddWorkspace(),
-                                                                      ));
-                                                                },
-                                                                child: Text(
-                                                                  "Add Workspace",
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .white),
-                                                                ),
-                                                              )),
-                                                        ),
-                                                      ],
-                                                    ));
-                                              },
-                                            );
-                                          });
-                                    },
-                                    child: Row(
+                                  CircleAvatar(
+                                    backgroundColor: primarycolor,
+                                    radius: MediaQuery.of(context).size.width *
+                                        0.08,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: <Widget>[
-                                        Text(
-                                          widget.workspaces[selectedradiotile]
-                                              .workspacename,
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.02),
-                                        ),
+                                        text(
+                                            'Invite',
+                                            0.02,
+                                            FontWeight.bold,
+                                            black,
+                                            1,
+                                            TextOverflow.ellipsis,
+                                            context),
                                         SizedBox(
-                                          width: 10,
+                                          height: 5,
                                         ),
-                                        Icon(
-                                          Icons.keyboard_arrow_down,
-                                          color: Colors.white,
-                                        )
+                                        Text(
+                                          'Invite Members to your team and jave fun,tonight is the column o f as sjbas naso',
+                                          textAlign: TextAlign.left,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              color: secondarycolor,
+                                              fontWeight: FontWeight.w500),
+                                        ),
                                       ],
                                     ),
-                                  ),
-                                  IconButton(
-                                    icon: Icon(Icons.settings,
-                                        color: Colors.white),
-                                    onPressed: () {},
                                   )
                                 ],
                               ),
                             ),
-                            profileBox(widget.userdata),
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: secondarycolor),
-                                width: MediaQuery.of(context).size.width,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.06,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 10.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Text(
-                                        'Projects',
-                                        style: TextStyle(
-                                            color: white,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      IconButton(
-                                        icon: Icon(
-                                          Icons.add,
-                                          color: white,
-                                        ),
-                                        onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    addproject(
-                                                  workspace: widget.workspaces[
-                                                      selectedradiotile],
-                                                  workspaceteamdata:
-                                                      workspaceteamdata,
-                                                  project: Project(),
-                                                ),
-                                              ));
-                                        },
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              height: MediaQuery.of(context).size.height * 0.32,
-                              child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: ListView.builder(
-                                      scrollDirection: Axis.horizontal,
-                                      shrinkWrap: true,
-                                      itemCount: projects.length,
-                                      itemBuilder: (c, i) {
-                                        return projectBox(projects[i]);
-
-                                        /*InkWell(
-                                          onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) => ProjectPage(
-                                                    project: projects[i],
-                                                    workspaceteam:
-                                                        workspaceteamdata,
-                                                    workspace: widget.workspaces[
-                                                        selectedradiotile],
-                                                  ),
-                                                ));
-                                          },
-                                          child: Padding(
-                                            padding:
-                                                const EdgeInsets.only(bottom: 10.0),
-                                            child: Container(
-                                                decoration: BoxDecoration(
-                                                    color: Colors.grey[300],
-                                                    borderRadius:
-                                                        BorderRadius.circular(5)),
-                                                padding: EdgeInsets.only(
-                                                    top: 10, bottom: 10),
-                                                child: Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      left: 15.0, right: 15),
-                                                  child: Column(
-                                                    children: <Widget>[
-                                                      Row(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        children: <Widget>[
-                                                          CircleAvatar(
-                                                            backgroundColor:
-                                                                Colors.red,
-                                                            radius: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                0.06,
-                                                            child: Text(
-                                                              projects[i]
-                                                                  .projectname[0]
-                                                                  .toUpperCase(),
-                                                              style: TextStyle(
-                                                                  color: white,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .height *
-                                                                      0.03),
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            width: 10,
-                                                          ),
-                                                          Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: <Widget>[
-                                                              Text(
-                                                                projects[i]
-                                                                    .projectname,
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontSize: MediaQuery.of(
-                                                                                context)
-                                                                            .size
-                                                                            .height *
-                                                                        0.02,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500),
-                                                              ),
-                                                              SizedBox(
-                                                                height: 5,
-                                                              ),
-                                                              Text(
-                                                                'Tasks : ${projects[i].tasks.length.toString()}',
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  ),
-                                                )),
-                                          ),
-                                        );*/
-                                      })),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: secondarycolor),
-                                width: MediaQuery.of(context).size.width,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.06,
-                                child: Center(
-                                  child: Text(
-                                    'Workspace team',
-                                    style: TextStyle(
-                                        color: white,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 20.0,
-                                  right: 20,
-                                  top: 10,
-                                ),
-                                child: ListView.builder(
-                                    shrinkWrap: true,
-                                    physics: NeverScrollableScrollPhysics(),
-                                    itemCount: workspaceteamdata.length,
-                                    itemBuilder: (c, i) {
-                                      return Padding(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 15.0),
-                                        child: Row(
-                                          children: <Widget>[
-                                            CircleAvatar(
-                                              radius: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.06,
-                                              backgroundImage: NetworkImage(
-                                                  workspaceteamdata[i]
-                                                      .profilepic),
-                                            ),
-                                            SizedBox(
-                                              width: 15,
-                                            ),
-                                            Expanded(
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: <Widget>[
-                                                  Text(
-                                                    workspaceteamdata[i]
-                                                        .username
-                                                        .toUpperCase(),
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                  Text(
-                                                    'product manager',
-                                                    style: TextStyle(
-                                                        color: Colors.grey[400],
-                                                        fontWeight:
-                                                            FontWeight.w400),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            IconButton(
-                                              icon: Icon(
-                                                Icons.graphic_eq,
-                                                color: white,
-                                              ),
-                                              onPressed: () {},
-                                            )
-                                          ],
-                                        ),
-                                      );
-                                    })),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 10.0, right: 10),
-                              child: Container(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.085,
-                                decoration: BoxDecoration(
-                                    color: secondarycolor,
-                                    borderRadius: BorderRadius.circular(5)),
-                                child: Row(
-                                  children: <Widget>[
-                                    IconButton(
-                                      icon: Icon(
-                                        Icons.all_inclusive,
-                                        color: white,
-                                      ),
-                                      onPressed: () {},
-                                    ),
-                                    Text(
-                                      'Invite',
-                                      style: TextStyle(
-                                          color: Colors.grey[400],
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            )
-                          ],
+                          ),
                         ),
-                      ),
+                        SizedBox(
+                          height: 30,
+                        )
+                      ],
                     ),
-                  );
-                });
-      },
-    );
+                  ),
+                );
+              } else {
+                return Scaffold(
+                  backgroundColor: Colors.white,
+                  body: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              }
+            });
   }
 }

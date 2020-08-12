@@ -61,7 +61,7 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     if (selectedindex == 0) {
       return Scaffold(
-        backgroundColor: secondarybackgroundcolor,
+        backgroundColor: whitebg,
         body: Home(),
         bottomNavigationBar: Mynavigator(
           index: 0,
@@ -75,7 +75,7 @@ class _DashboardState extends State<Dashboard> {
     }
     if (selectedindex == 1) {
       return Scaffold(
-        backgroundColor: secondarybackgroundcolor,
+        backgroundColor: whitebg,
         body: ReportHome(),
         bottomNavigationBar: Mynavigator(
           index: 0,
@@ -89,7 +89,6 @@ class _DashboardState extends State<Dashboard> {
     }
     if (selectedindex == 4) {
       return Scaffold(
-        backgroundColor: secondarybackgroundcolor,
         body: Profile(
           userdata: widget.userdata,
           workspaces: widget.workspaces,
@@ -106,7 +105,7 @@ class _DashboardState extends State<Dashboard> {
     }
     if (selectedindex == 2) {
       return Scaffold(
-        backgroundColor: secondarybackgroundcolor,
+        backgroundColor: whitebg,
         body: Settings(),
         bottomNavigationBar: Mynavigator(
           index: 0,

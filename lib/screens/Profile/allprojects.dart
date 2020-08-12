@@ -27,7 +27,7 @@ class _AllProjectsState extends State<AllProjects> {
         alignment: Alignment.topLeft,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: backgroundcolor,
+          color: whitebg,
         ),
         child: TextFormField(
           controller: _searchcontroller,
@@ -62,7 +62,7 @@ class _AllProjectsState extends State<AllProjects> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: secondarybackgroundcolor,
+      backgroundColor: whitebg,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -132,8 +132,7 @@ class _AllProjectsState extends State<AllProjects> {
                                             CrossAxisAlignment.center,
                                         children: <Widget>[
                                           CircleAvatar(
-                                            backgroundColor:
-                                                secondarybackgroundcolor,
+                                            backgroundColor: whitebg,
                                             radius: MediaQuery.of(context)
                                                     .size
                                                     .width *

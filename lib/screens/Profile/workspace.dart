@@ -196,7 +196,7 @@ class _WorkspacePageState extends State<WorkspacePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: secondarybackgroundcolor,
+      backgroundColor: whitebg,
       body: StreamBuilder<List<Project>>(
           stream: DatabaseService(workspaceuid: widget.workspace.workspaceuid)
               .projects,

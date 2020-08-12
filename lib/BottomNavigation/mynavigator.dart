@@ -40,7 +40,7 @@ class _MynavigatorState extends State<Mynavigator> {
       padding: EdgeInsets.only(left: 15, right: 15),
       height: MediaQuery.of(context).size.height * 0.06,
       decoration: BoxDecoration(
-        color: backgroundcolor,
+        color: whitebg,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
